@@ -1,7 +1,7 @@
 #include "../include/Parser.hpp"
 //#include std::string;
 
-Parser::Parser(Lexer *lexer)
+Parser::Parser(Lexer *lexer, string filename)
 {
     tokens = {
         {TOK_ID,"id"},
@@ -23,6 +23,7 @@ Parser::Parser(Lexer *lexer)
         {TOK_RCOR,"]"},
     };
     this->lexer = lexer;
+    this->gen = Generator(filename);
 
     TOKEN tmp;
 
@@ -33,18 +34,6 @@ Parser::Parser(Lexer *lexer)
         tokens_numType.push(this->lexer->getType());
     } while( tmp != 0 );
 
-
-    // while(!tokens_string.empty()){  
-    //     cout << tokens_string.front() << " ";
-    //       tokens_string.pop();
-    //       cout << tokens_enum.front() << " ";
-    //       tokens_enum.pop();
-    //       cout << tokens_numType.front() << endl;
-    //       tokens_numType.pop();
-    //   }
- 
-    // error("----------");
- 
     token = tokens_enum.front();
     
 }
@@ -409,30 +398,11 @@ arreglo Parser::y_(arreglo Y_)
     }
 }
 
-//TODO: solo debe retornar el número mayor
 int Action::maximo(int tipo1,int tipo2){
-    if (tipo1 == tipo2) {
-        return tipo1;
-    } else if ( tipo1 == 0 && tipo2 == 1 ){
-        return tipo2;
-    } else if ( tipo1 == 1 && tipo2 == 0 ){
-        return tipo1;
-    } else {
-        error("Tipos de dato incompatibles");
-        return -1;
-    }
+    return (tipo1 > tipo2) ? tipo1 : tipo2;
 }
 
-//TODO: Solo debe retornar el número menor
 int Action::minimo(int tipo1,int tipo2){
-    int ret = maximo(tipo1,tipo2);
-    if (ret == 0) {
-        return 1;
-    } else if ( ret == 1 ){
-        return 0;
-    } else {
-        error("Tipos de dato incompatibles");
-        return -1;
-    }
+    return (tipo1 < tipo2) ? tipo1 : tipo2;
 }
 

@@ -146,7 +146,6 @@ vector<Cuadrupla> Action::getCodInt(){
     return this->codInt;
 }
 
-//TODO: Que valor tiene temporal?
 string Action::nuevaTemporal(){
     numEtq++;
     string temporal = "t" + to_string(numTemp++) + " ";

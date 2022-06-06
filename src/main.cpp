@@ -19,13 +19,6 @@ int main(int argc, char *argv[])
 	}
 
 	Lexer lexer(&archivo);
-    //cout << lexer.getVal() << endl;
-	/*
-	 * while(lexer.yylex() != 0){
-	 *   ;
-	 *   cout << lexer.getVal() << endl;
-	 * }
-	 */
 	Parser parser(&lexer);
 
 	if( parser.parse() ){

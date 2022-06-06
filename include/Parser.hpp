@@ -24,7 +24,7 @@ private:
     queue<int> tokens_numType;
 public:
     Parser();
-    Parser(Lexer *lex);
+    Parser(Lexer *lex, string filename);
     bool parse();
     void p();
     void d();

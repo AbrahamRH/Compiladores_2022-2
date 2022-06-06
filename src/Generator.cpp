@@ -1,12 +1,5 @@
 #include "../include/Generator.hpp"
 
-
-Generator::Generator(std::string filename)
-{
-  std::string name = filename +".mips";
-}
-
-
 void Generator::translate(vector<Cuadrupla> code)
 {
   for(std::vector<Cuadrupla>::iterator c = code.begin(); c!= code.end(); ++c){

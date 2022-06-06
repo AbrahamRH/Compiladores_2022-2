@@ -8,11 +8,12 @@ using namespace std;
 class Generator
 {
   private: 
+    string filename;
     std::ofstream file;
   public:
     Generator() = default;
-    Generator(string file);
     ~Generator()=default;
+    void setFilename(string filename);
     void translate(std::vector<Cuadrupla> code);
     void translate(Cuadrupla c, int tipo);
 

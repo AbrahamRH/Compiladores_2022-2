@@ -30,7 +30,7 @@
 *.exe
 *.out
 *.app
-output/main
+output/*
 
 # Configuracion personal
 .vscode
