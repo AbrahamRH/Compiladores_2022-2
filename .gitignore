@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+output/main
+
+# Configuracion personal
+.vscode
+.editorconfig
+.root
