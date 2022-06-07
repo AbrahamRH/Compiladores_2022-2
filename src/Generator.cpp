@@ -7,6 +7,12 @@ void Generator::translate(vector<Cuadrupla> code)
   }
 }
 
+
+void Generator::setFilename(string filename)
+{
+  this->filename = filename;
+}
+
 //TODO: terminarla
 //que representa tipo?
 

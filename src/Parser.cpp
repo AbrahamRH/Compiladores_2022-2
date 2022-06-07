@@ -23,7 +23,7 @@ Parser::Parser(Lexer *lexer, string filename)
         {TOK_RCOR,"]"},
     };
     this->lexer = lexer;
-    this->gen = Generator(filename);
+    this->gen.setFilename(filename);
 
     TOKEN tmp;
 
