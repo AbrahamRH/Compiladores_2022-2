@@ -274,16 +274,16 @@ expresion Parser::e_(expresion E_)
     if(token == TOK_MAS)
     {
         eat(TOK_MAS);
-        expresion G =g();
+        expresion F = f();
         expresion E_1h;
-        action.equivalentes(E_.tipo, G.tipo);
-        E_1h.tipo = action.maximo(E_.tipo, G.tipo);
+        bool eq = action.equivalentes(E_.tipo, F.tipo); // Solo hacer esto si no son equivalentes
+        E_1h.tipo = action.maximo(E_.tipo, F.tipo);
         E_1h.dir = action.nuevaTemporal();
         expresion E_1s = e_(E_1h);
         //TODO: Revisas gramatica
-        string op1 = action.ampliar(E_1h.dir, E_1h.tipo, E_1h.tipo);
-        string op2 = action.ampliar(G.dir, G.tipo, E_1h.tipo);
-        action.genCod("+",op1, op2, E_1s.dir);
+        string op1 = action.ampliar(E_.dir, E_.tipo, E_1h.tipo);
+        string op2 = action.ampliar(F.dir, F.tipo, E_1h.tipo);
+        action.genCod("+", op1, op2, E_1h.dir);
         return E_1s;
     }else{
         return E_;
@@ -312,7 +312,7 @@ expresion Parser::g_(expresion G_){
         string op1 = action.ampliar(G_.dir, G_.tipo, G_1h.tipo);
         string op2 = action.ampliar(F.dir, F.tipo, G_1h.tipo);
         action.genCod("*", op1, op2, G_1h.dir);
-        return G_1h;
+        return G_1s;
     }else
         return G_;
 }

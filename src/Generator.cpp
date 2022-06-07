@@ -16,7 +16,7 @@ void Generator::intermedio(vector<Cuadrupla> code)
 {
   generateFile("i--");
   for(Cuadrupla c : code){
-    file << c.res + c.op1 + c.op + c.op2 << endl;
+    file << c.res + " = " + c.op1 + " " +  c.op + " " + c.op2 << endl;
   }
   file.close();
 }

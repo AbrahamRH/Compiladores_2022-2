@@ -62,12 +62,16 @@ void Action::asignacion(string id, expresion e)
     if( tipoBase == -1){
         if(!equivalentes(tipo, e.tipo)){
             temp = reducir(e.dir, e.tipo, tipo);
-            genCod("=", "", e.dir, id);
+            genCod("", "", temp, id);
+        } else{
+            genCod("", "", e.dir, id);
         }
     } else {
         if(!equivalentes(tipoBase, e.tipo)){
             temp = reducir(e.dir, e.tipo, tipoBase);
-            genCod("=", "", e.dir, id);
+            genCod("", "", temp, id);
+        } else{
+            genCod("","",e.dir, id );
         }
     }
 }
@@ -115,7 +119,7 @@ string Action::reducir(string dir, int tipoOrg, int tipoDest){
     } else if (tipoOrg == 1 && tipoDest == 0 ) {
         string temp = nuevaTemporal();
         string cast = "(int)" + dir;
-        genCod("=", cast, "", temp);
+        genCod("", cast, "", temp);
         return temp;
     } else {
         error("Error de casteo");
@@ -136,7 +140,7 @@ string Action::ampliar(string dir, int tipoOrg, int tipoDest){
     } else if ( tipoOrg == 0 && tipoDest == 1 ) {
         string temp = nuevaTemporal();
         string cast = "(float)" + dir;
-        genCod("=", cast, "", temp);
+        genCod("", cast, "", temp);
         return temp;
     } else {
         error("Error de casteo");
@@ -151,11 +155,11 @@ vector<Cuadrupla> Action::getCodInt(){
 
 string Action::nuevaTemporal(){
     numEtq++;
-    string temporal = "t" + to_string(numTemp++) + " ";
+    string temporal = "t" + to_string(numTemp++);
     return temporal;
 }
 
 string Action::nuevaEtiqueta(){
-    string etiqueta = "L" + to_string(numEtq++) + " ";
+    string etiqueta = "L" + to_string(numEtq++);
     return etiqueta;
 }
