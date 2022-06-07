@@ -61,14 +61,14 @@ void Action::asignacion(string id, expresion e)
     int tipoBase = TablaT.getBaseType(tipo);
     if( tipoBase == -1){
         if(!equivalentes(tipo, e.tipo)){
-            temp = reducir(e.dir, e.tipo, tipo);
+            temp = (tipo == 1) ? ampliar(e.dir, e.tipo, tipo) : reducir(e.dir, e.tipo, tipo);
             genCod("", "", temp, id);
         } else{
             genCod("", "", e.dir, id);
         }
-    } else {
+    } else { //Arreglos
         if(!equivalentes(tipoBase, e.tipo)){
-            temp = reducir(e.dir, e.tipo, tipoBase);
+            temp = (tipoBase == 1) ? ampliar(e.dir, e.tipo, tipoBase) : reducir(e.dir, e.tipo, tipoBase);
             genCod("", "", temp, id);
         } else{
             genCod("","",e.dir, id );
@@ -110,10 +110,6 @@ bool Action::equivalentes(int tipo1, int tipo2) {
 
 
 string Action::reducir(string dir, int tipoOrg, int tipoDest){
-    /*
-     * cout<< tipoOrg  << endl;
-     * cout<< tipoDest << endl;
-     */
     if ( tipoOrg == tipoDest ) {
         return dir;
     } else if (tipoOrg == 1 && tipoDest == 0 ) {
@@ -130,11 +126,6 @@ string Action::reducir(string dir, int tipoOrg, int tipoDest){
 }
     //TODO Revisar error de casteo
 string Action::ampliar(string dir, int tipoOrg, int tipoDest){
-    /*
-     * cout<< tipoOrg  << endl;
-     * cout<< tipoDest << endl;
-     * cout << "--------" << endl;
-     */
     if( tipoOrg ==  tipoDest ){
         return dir;
     } else if ( tipoOrg == 0 && tipoDest == 1 ) {
