@@ -58,9 +58,17 @@ void Action::asignacion(string id, expresion e)
 {
     string temp;
     int tipo = TablaS.getType(id);
-    if(equivalentes(tipo, e.tipo)){
-        temp = reducir(e.dir, e.tipo, tipo);
-        genCod("", " = ", e.dir, id);
+    int tipoBase = TablaT.getBaseType(tipo);
+    if( tipoBase == -1){
+        if(!equivalentes(tipo, e.tipo)){
+            temp = reducir(e.dir, e.tipo, tipo);
+            genCod("=", "", e.dir, id);
+        }
+    } else {
+        if(!equivalentes(tipoBase, e.tipo)){
+            temp = reducir(e.dir, e.tipo, tipoBase);
+            genCod("=", "", e.dir, id);
+        }
     }
 }
 
@@ -69,17 +77,10 @@ void Action::asignacion(string id, string des, expresion e)
 {
     string temp;
     int tipo = TablaS.getType(id);
-    if(equivalentes(tipo, e.tipo)){
+    if(!equivalentes(tipo, e.tipo)){
         temp = reducir(e.dir, e.tipo, tipo);
         string dir = id+"["+des+"]";
-        genCod("=", e.dir, "", dir);
-    }
-}
-
-void Action::suma(expresion e1, expresion e2)
-{
-    if(equivalentes(e1.tipo, e2.tipo)){
-        //TODO implementar
+        genCod("=", temp, "", dir);
     }
 }
 
@@ -98,7 +99,8 @@ void Action::validar_indice(int tipo)
 }
 
 bool Action::equivalentes(int tipo1, int tipo2) {
-    // return (TablaT.getBaseType(tipo1) == TablaT.getBaseType(tipo2)) ? true : false;
+    if(tipo1 > 1 || tipo2 > 1)
+        return (TablaT.getBaseType(tipo1) == TablaT.getBaseType(tipo2)) ? true : false;
     return tipo1 == tipo2 ? true : false;
 }
 
@@ -119,6 +121,7 @@ string Action::reducir(string dir, int tipoOrg, int tipoDest){
         error("Error de casteo");
         return "error";
     }
+
 
 }
     //TODO Revisar error de casteo

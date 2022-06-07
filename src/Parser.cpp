@@ -1,7 +1,7 @@
 #include "../include/Parser.hpp"
 //#include std::string;
 
-Parser::Parser(Lexer *lexer, string filename)
+Parser::Parser(Lexer *lexer, string filename = "out")
 {
     tokens = {
         {TOK_ID,"id"},
@@ -32,6 +32,7 @@ Parser::Parser(Lexer *lexer, string filename)
         tokens_enum.push(tmp);
         tokens_string.push(this->lexer->getVal());
         tokens_numType.push(this->lexer->getType());
+        tokens_lines.push(this->lexer->getLine());
     } while( tmp != 0 );
 
     token = tokens_enum.front();
@@ -42,6 +43,7 @@ TOKEN Parser::getCurrentToken(){
     tokens_enum.pop();
     tokens_string.pop();
     tokens_numType.pop();
+    tokens_lines.pop();
     TOKEN top = tokens_enum.front();
     return top;
 }
@@ -54,11 +56,8 @@ Parser::Parser(){
 bool Parser::parse(){
     p();
     gen.translate(action.getCodInt());
+    gen.intermedio(action.getCodInt());
     if(token == TOK_EOF){
-        vector<Cuadrupla> cod = action.getCodInt();
-        for(Cuadrupla c : cod){
-            cout << c.res + c.op1 + c.op + c.op2 << endl;
-        }
     }
     return token == TOK_EOF;
 }
@@ -67,12 +66,13 @@ void Parser::eat(TOKEN token_eat){
     if( token == token_eat ){  
         token = getCurrentToken();
     } else {
-        error("Se encontro " + tokens[token] +  " token y se esperaba " + tokens[token_eat]);
+        error("Se encontro " + tokens[token] +  " token y se esperaba " + tokens[token_eat] );
     }
 }
 
 void Parser::error(string msg){
     cout<<"ERROR SEMÁNTICO: "<<msg<<endl;
+    cout<<"ERROR ENCONTRADO EN LA LINEA: "<<to_string(tokens_lines.front())<<endl;
     exit(EXIT_FAILURE);
 }
 
@@ -112,7 +112,7 @@ int Parser::b(){
     }
     else
     {
-        error("Se esperaba int o float");
+        error("Se esperaba int o float en la linea.");
     }
 }
 
@@ -279,7 +279,6 @@ expresion Parser::e_(expresion E_)
         action.equivalentes(E_.tipo, G.tipo);
         E_1h.tipo = action.maximo(E_.tipo, G.tipo);
         E_1h.dir = action.nuevaTemporal();
-        //TODO: Revisar que hacemos con las temporales
         expresion E_1s = e_(E_1h);
         //TODO: Revisas gramatica
         string op1 = action.ampliar(E_1h.dir, E_1h.tipo, E_1h.tipo);

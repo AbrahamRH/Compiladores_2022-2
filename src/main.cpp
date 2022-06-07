@@ -6,7 +6,7 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
-	std::cout << "mi primer compilador!" << std::endl;
+	std::cout << "Mi primer compilador!" << std::endl;
 	if( argc < 2 ){
 		cout << "ERROR: Falta nombre del archivo" << endl;
 	}
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	}
 
 	Lexer lexer(&archivo);
-	Parser parser(&lexer);
+	Parser parser(&lexer, argv[1]);
 
 	if( parser.parse() ){
 		cout << "La cadena es aceptada" << endl;

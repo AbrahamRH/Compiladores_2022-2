@@ -22,6 +22,8 @@ private:
     queue<TOKEN> tokens_enum;
     queue<string> tokens_string;
     queue<int> tokens_numType;
+    queue<int> tokens_lines;
+
 public:
     Parser();
     Parser(Lexer *lex, string filename);
