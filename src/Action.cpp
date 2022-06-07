@@ -62,16 +62,16 @@ void Action::asignacion(string id, expresion e)
     if( tipoBase == -1){
         if(!equivalentes(tipo, e.tipo)){
             temp = (tipo == 1) ? ampliar(e.dir, e.tipo, tipo) : reducir(e.dir, e.tipo, tipo);
-            genCod("", "", temp, id);
+            genCod("=", "", temp, id);
         } else{
-            genCod("", "", e.dir, id);
+            genCod("=", "", e.dir, id);
         }
     } else { //Arreglos
         if(!equivalentes(tipoBase, e.tipo)){
             temp = (tipoBase == 1) ? ampliar(e.dir, e.tipo, tipoBase) : reducir(e.dir, e.tipo, tipoBase);
-            genCod("", "", temp, id);
+            genCod("=", "", temp, id);
         } else{
-            genCod("","",e.dir, id );
+            genCod("=","",e.dir, id );
         }
     }
 }
@@ -132,6 +132,7 @@ string Action::ampliar(string dir, int tipoOrg, int tipoDest){
         string temp = nuevaTemporal();
         string cast = "(float)" + dir;
         genCod("", cast, "", temp);
+        //res op1  op op2
         return temp;
     } else {
         error("Error de casteo");
@@ -145,7 +146,6 @@ vector<Cuadrupla> Action::getCodInt(){
 }
 
 string Action::nuevaTemporal(){
-    numEtq++;
     string temporal = "t" + to_string(numTemp++);
     return temporal;
 }

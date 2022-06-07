@@ -180,16 +180,19 @@ void Parser::s(){
         eat(TOK_ID);
         action.existe(idVal);
         c(idVal);
-        // eat(TOK_PYC);
     }else if(token == TOK_IF){
+        Ltrue = action.nuevaEtiqueta();
+        Lfalse = action.nuevaEtiqueta();
         eat(TOK_IF);
         eat(TOK_LPAR);
-        e();
+        expresion E = e();
         eat(TOK_RPAR);
+        action.genCod("if", E.dir, "goto", Ltrue);
+        action.genCod("goto", "", "", Lfalse);
+        action.genCod("label", "", "", Ltrue);
         s();
-        z();
+        z(Lfalse);
     }else if(token == TOK_WHILE){
-        //TODO: verificar los operadores 
         Linicio = action.nuevaEtiqueta();
         Ltrue = action.nuevaEtiqueta();
         Lfalse = action.nuevaEtiqueta();
@@ -200,21 +203,21 @@ void Parser::s(){
         action.genCod("label", "", "", Linicio);
         action.genCod("if", E.dir, "goto", Ltrue);
         action.genCod("goto", "", "", Lfalse);
+        action.genCod("label", "", "", Ltrue);
         s();        
         action.genCod("goto", "", "", Linicio);
         action.genCod("label", "", "", Lfalse);
     }else if(token == TOK_DO){
-        //TODO: verificar los operadores
         Ltrue = action.nuevaEtiqueta();
         Lfalse = action.nuevaEtiqueta();
         eat(TOK_DO);
+        action.genCod("label", Ltrue, "Codigo", Ltrue);
         s();
         eat(TOK_WHILE);
         eat(TOK_LPAR);
         expresion E = e();
         eat(TOK_RPAR);
         eat(TOK_PYC);
-        action.genCod("label", Ltrue, "Codigo", Linicio);
         action.genCod("if", E.dir, "goto", Ltrue);
         action.genCod("label", "", "", Lfalse);
         
@@ -224,18 +227,17 @@ void Parser::s(){
 }
 
 //TODO: Verificar los operadores
-void Parser::z(){
+void Parser::z(string ZFalse){
     string Lfin, Lfalse;
+    Lfalse = ZFalse;
     if(token == TOK_ELSE){
         Lfin = action.nuevaEtiqueta();
-        Lfalse = action.nuevaEtiqueta();
         action.genCod("goto", "", "", Lfin);
         action.genCod("label", "", "", Lfalse);
         eat(TOK_ELSE);
         s();
-        action.genCod("label", "", "", Lfin);   
+        action.genCod("label", "", "", Lfin);
     } else{
-        Lfalse = action.nuevaEtiqueta();
         action.genCod("label", "", "", Lfalse);
     }
 }

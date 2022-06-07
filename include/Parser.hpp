@@ -38,7 +38,7 @@ public:
     int a(int base);
     void r_();
     void s();
-    void z();
+    void z(string Zfalse);
     void c(string id);    
     TOKEN getCurrentToken();
     expresion e();

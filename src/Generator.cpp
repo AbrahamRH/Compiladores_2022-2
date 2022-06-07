@@ -16,7 +16,21 @@ void Generator::intermedio(vector<Cuadrupla> code)
 {
   generateFile("i--");
   for(Cuadrupla c : code){
-    file << c.res + " = " + c.op1 + " " +  c.op + " " + c.op2 << endl;
+    if( c.op == "*")
+      file <<"\t"<< c.res + " = "+ c.op1 + " " +  c.op + " " + c.op2 << endl;
+    else if( c.op == "+")
+      file <<"\t"<< c.res + " = "+ c.op1 + " " +  c.op + " " + c.op2 << endl;
+    else if(c.op == "label")
+      file << c.res << ": "<<endl;
+    else if(c.op == "goto")
+      file <<"\t"<< c.op << " " << c.res << endl;
+    else if(c.op == "if")
+      file <<"\t"<< c.op << " " << c.op1 << " "<< c.op2 << " " << c.res << endl;
+    else if( c.op != ""){
+      file <<"\t"<< c.res + " " +  c.op1 + " " +  c.op + " " + c.op2 << endl;
+    } else {
+      file <<"\t"<< c.res + " = "+ c.op1 + " " +  c.op + " " + c.op2 << endl;
+    }
   }
   file.close();
 }
