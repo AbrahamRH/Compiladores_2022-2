@@ -55,10 +55,8 @@ Parser::Parser(){
 
 bool Parser::parse(){
     p();
-    gen.translate(action.getCodInt());
     gen.intermedio(action.getCodInt());
-    if(token == TOK_EOF){
-    }
+    gen.translate(action.getCodInt());
     return token == TOK_EOF;
 }
 
@@ -191,6 +189,7 @@ void Parser::s(){
         s();
         z();
     }else if(token == TOK_WHILE){
+        //TODO: verificar los operadores 
         Linicio = action.nuevaEtiqueta();
         Ltrue = action.nuevaEtiqueta();
         Lfalse = action.nuevaEtiqueta();
@@ -205,6 +204,7 @@ void Parser::s(){
         action.genCod("goto", "", "", Linicio);
         action.genCod("label", "", "", Lfalse);
     }else if(token == TOK_DO){
+        //TODO: verificar los operadores
         Ltrue = action.nuevaEtiqueta();
         Lfalse = action.nuevaEtiqueta();
         eat(TOK_DO);
@@ -223,6 +223,7 @@ void Parser::s(){
     }
 }
 
+//TODO: Verificar los operadores
 void Parser::z(){
     string Lfin, Lfalse;
     if(token == TOK_ELSE){

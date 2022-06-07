@@ -20,6 +20,8 @@ void Generator::intermedio(vector<Cuadrupla> code)
   }
   file.close();
 }
+
+
 void Generator::setFilename(string filename)
 {
   this->filename = filename;
@@ -37,8 +39,6 @@ void Generator::generateFile(string ext){
 }
 
 //TODO: terminarla
-//que representa tipo?
-
 void Generator::translate(Cuadrupla c, int tipo)
 {
   if( c.op == "+"){
@@ -50,5 +50,7 @@ void Generator::translate(Cuadrupla c, int tipo)
     file <<"\tlw $t0, " <<c.op1<<endl;
     file <<"\tbne $t0, $zero, " <<c.res<<endl;
   }
+
+  cout << c.op << endl;
 
 }
