@@ -115,7 +115,7 @@ string Action::reducir(string dir, int tipoOrg, int tipoDest){
     } else if (tipoOrg == 1 && tipoDest == 0 ) {
         string temp = nuevaTemporal();
         string cast = "(int)" + dir;
-        genCod("", cast, "", temp);
+        genCod("castI", cast, "", temp);
         return temp;
     } else {
         error("Error de casteo");
@@ -131,7 +131,7 @@ string Action::ampliar(string dir, int tipoOrg, int tipoDest){
     } else if ( tipoOrg == 0 && tipoDest == 1 ) {
         string temp = nuevaTemporal();
         string cast = "(float)" + dir;
-        genCod("", cast, "", temp);
+        genCod("castF", cast, "", temp);
         //res op1  op op2
         return temp;
     } else {

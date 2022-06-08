@@ -56,7 +56,7 @@ Parser::Parser(){
 bool Parser::parse(){
     p();
     gen.intermedio(action.getCodInt(), action.TablaS.getTable());
-    gen.translate(action.getCodInt());
+    gen.translate(action.getCodInt(), action.TablaS.getTable(), action.TablaT.getTable());
     return token == TOK_EOF;
 }
 

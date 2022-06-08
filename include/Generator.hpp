@@ -18,7 +18,7 @@ class Generator
     Generator() = default;
     ~Generator()=default;
     void setFilename(string filename);
-    void translate(std::vector<Cuadrupla> code);
+    void translate(std::vector<Cuadrupla> code, std::map<std::string, symbols> TablaS, std::map<int,types> TablaT);
     void translate(Cuadrupla c, int tipo);
     void intermedio(vector<Cuadrupla> code, std::map<std::string, symbols> TablaS);
 
