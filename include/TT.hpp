@@ -29,6 +29,7 @@ class TT {
         int getBaseType(int id);
         int agregar(std::string val, int base);
         bool existe(int id);
+        std::map<int,types> getTable();
 };
 
 #endif //!__TT_HPP__

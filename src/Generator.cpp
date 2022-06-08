@@ -12,9 +12,16 @@ void Generator::translate(vector<Cuadrupla> code)
 }
 
 
-void Generator::intermedio(vector<Cuadrupla> code)
+void Generator::intermedio(vector<Cuadrupla> code,std::map<std::string, symbols>TablaS)
 {
+  map <string, symbols>::iterator simbolo;
+  map <int, types>::iterator tipo;
   generateFile("i--");
+  for(simbolo = TablaS.begin(); simbolo != TablaS.end(); simbolo++){
+    string tipo = simbolo->second.type > 1 ? "array" : simbolo->second.type > 0 ? "float" : "int"; 
+    file << tipo << " " << simbolo->first << ";" << endl;
+  }
+  
   for(Cuadrupla c : code){
     if( c.op == "*")
       file <<"\t"<< c.res + " = "+ c.op1 + " " +  c.op + " " + c.op2 << endl;
@@ -32,6 +39,7 @@ void Generator::intermedio(vector<Cuadrupla> code)
       file <<"\t"<< c.res + " = "+ c.op1 + " " +  c.op + " " + c.op2 << endl;
     }
   }
+
   file.close();
 }
 

@@ -26,7 +26,7 @@ class TS {
 		std::vector<int> getArgs(std::string id);
 		bool existe(std::string id);
 		void agregar(std::string id, int dir, int tipo, std::string categoria);
-
+		std::map<std::string, symbols> getTable();
 };
 
 

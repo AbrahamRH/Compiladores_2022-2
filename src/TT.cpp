@@ -45,3 +45,7 @@ types::types(std::string name, int size, int elements, int base){
     this->elements = elements;
     this->baseType = base;
 }
+
+std::map<int,types> TT::getTable(){
+    return this->table;
+}

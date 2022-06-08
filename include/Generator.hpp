@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include "Cuadrupla.hpp"
+#include "TS.hpp"
+#include "TT.hpp"
 using namespace std;
 class Generator
 {
@@ -18,7 +20,7 @@ class Generator
     void setFilename(string filename);
     void translate(std::vector<Cuadrupla> code);
     void translate(Cuadrupla c, int tipo);
-    void intermedio(vector<Cuadrupla> code);
+    void intermedio(vector<Cuadrupla> code, std::map<std::string, symbols> TablaS);
 
 };
 #endif

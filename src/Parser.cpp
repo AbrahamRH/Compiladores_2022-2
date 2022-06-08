@@ -55,7 +55,7 @@ Parser::Parser(){
 
 bool Parser::parse(){
     p();
-    gen.intermedio(action.getCodInt());
+    gen.intermedio(action.getCodInt(), action.TablaS.getTable());
     gen.translate(action.getCodInt());
     return token == TOK_EOF;
 }
@@ -82,7 +82,7 @@ void Parser::p()
 
 void Parser::d()
 {
-    if(token== TOK_INT || token ==TOK_FLOAT){
+    if(token == TOK_INT || token == TOK_FLOAT){
         int Ttipo = t();
         l(Ttipo);
         eat(TOK_PYC);

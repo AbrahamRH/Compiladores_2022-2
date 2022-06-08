@@ -16,7 +16,7 @@ int Action::validarDimensionArreglo(int tipo, string val, int base)
         return TablaT.agregar(val, base);
     }else{
         error("La expresión no es del  tipo int");
-    return 0;
+        return 0;
     }
 }
 
