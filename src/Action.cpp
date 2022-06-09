@@ -3,12 +3,23 @@
 Action::Action(/* args */)
 {
     numEtq = 0;
+    numConst = 0;
 }
 
 Action::~Action()
 {
 }
 
+
+expresion Action::agregarConstFloat(expresion F)
+{
+    expresion F_;
+    string newVal =  "cf"+ to_string(numConst++);
+    constFloat[F.dir] = newVal;
+    F_.dir = newVal;
+    F_.tipo = F.tipo;
+    return F_;
+}
 
 int Action::validarDimensionArreglo(int tipo, string val, int base)
 {
@@ -20,6 +31,9 @@ int Action::validarDimensionArreglo(int tipo, string val, int base)
     }
 }
 
+map<string, string> Action::getConstF(){
+    return this->constFloat;
+}
 
 void Action::agregarSimbolo(string id, int tipo, string categoria)
 {

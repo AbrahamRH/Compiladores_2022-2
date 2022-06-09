@@ -18,7 +18,9 @@ private:
     void error(string msg);
     int numEtq=0;
     int numTemp=0;
+    int numConst = 0;
     vector<Cuadrupla> codInt;
+    map<string, string> constFloat; //{id, val}
 
 public:
     TT TablaT;
@@ -45,6 +47,8 @@ public:
     void validar_indice(int tipo);
     void suma(expresion e1,expresion e2);
     vector<Cuadrupla> getCodInt();
+    expresion agregarConstFloat(expresion F);
+    map<string, string> getConstF();
 };
 
 

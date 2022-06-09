@@ -1,9 +1,11 @@
 #include "../include/Generator.hpp"
 //TODO: Pasar tabla de simbolos y tipos a translate
 
-void Generator::translate(vector<Cuadrupla> code, std::map<std::string, symbols>TablaS, std::map<int, types> TablaT)
+void Generator::translate(vector<Cuadrupla> code, std::map<std::string, symbols>TablaS, std::map<int, types> TablaT, std::map<string, string> constFloat)
 {
   map <string, symbols>::iterator simbolo;
+  map <string, string>::iterator cf;
+
   generateFile("mips");
   file << ".data" << endl;
   for(simbolo = TablaS.begin(); simbolo != TablaS.end(); simbolo++){
@@ -13,18 +15,27 @@ void Generator::translate(vector<Cuadrupla> code, std::map<std::string, symbols>
     }else
       file <<"\t"<< simbolo->first << ": " << ".word" << endl;
   }
+
+  for (cf = constFloat.begin(); cf != constFloat.end(); cf++){
+    file << "\t" << cf->second << ": " << ".float " << cf->first << endl;
+  }
+
   file << ".text" << endl;
   for(std::vector<Cuadrupla>::iterator c = code.begin(); c!= code.end(); ++c){
     auto S = TablaS.find(c->res);
     int tipo = S->second.type;
-    translate(*c, tipo);
+    if(tipo > 1)
+      translate(*c, 1);
+    else
+      translate(*c, tipo);
   }
   file.close();
 }
 
 
-void Generator::intermedio(vector<Cuadrupla> code,std::map<std::string, symbols>TablaS)
+void Generator::intermedio(vector<Cuadrupla> code,std::map<std::string, symbols>TablaS, std::map<int, types> TablaT, std::map<string, string> constFloat)
 {
+  map <string, string>::iterator cf;
   map <string, symbols>::iterator simbolo;
   generateFile("i--");
   for(simbolo = TablaS.begin(); simbolo != TablaS.end(); simbolo++){
@@ -32,6 +43,10 @@ void Generator::intermedio(vector<Cuadrupla> code,std::map<std::string, symbols>
     file << tipo << " " << simbolo->first << ";" << endl;
   }
   
+   for (cf = constFloat.begin(); cf != constFloat.end(); cf++){
+    file << "float " << cf->second << " = " << cf->first << ";" << endl;
+  }
+
   for(Cuadrupla c : code){
     if( c.op == "*")
       file <<"\t"<< c.res + " = "+ c.op1 + " " +  c.op + " " + c.op2 << endl;
@@ -70,7 +85,7 @@ void Generator::generateFile(string ext){
   }
 }
 
-void Generator::translate(Cuadrupla c, int tipo)
+void Generator::translate(Cuadrupla c, int tipo = 1)
 {
   if(tipo == 0){
     if(c.op == "+"){

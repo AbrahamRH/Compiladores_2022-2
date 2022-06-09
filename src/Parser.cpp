@@ -55,8 +55,8 @@ Parser::Parser(){
 
 bool Parser::parse(){
     p();
-    gen.intermedio(action.getCodInt(), action.TablaS.getTable());
-    gen.translate(action.getCodInt(), action.TablaS.getTable(), action.TablaT.getTable());
+    gen.intermedio(action.getCodInt(), action.TablaS.getTable(), action.TablaT.getTable(), action.getConstF());
+    gen.translate(action.getCodInt(), action.TablaS.getTable(), action.TablaT.getTable(), action.getConstF());
     return token == TOK_EOF;
 }
 
@@ -331,6 +331,8 @@ expresion Parser::f(){
     }else if(token == TOK_NUM){
         F.dir = tokens_string.front();
         F.tipo = tokens_numType.front();
+        if(F.tipo == 1)
+            F = action.agregarConstFloat(F);
         eat(TOK_NUM);
         return F;
     }else if(token == TOK_ID){
