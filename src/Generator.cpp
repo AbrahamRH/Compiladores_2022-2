@@ -99,7 +99,10 @@ void Generator::translate(Cuadrupla c, int tipo = 1)
       file <<"\tmul $t2, $t0, $t1"<<endl;
       file <<"\tsw $t2, " <<c.res<<endl;
     } else if (c.op == "=") {
-      file <<"\tlw $t0, " <<c.op2<<endl;
+      if(c.op2.substr(1,1) == "[")
+        file <<"\tlw $t0, "  << c.op2.substr(0,1) + "(" + c.op2.substr(2,2) + ")" <<endl;
+      else
+        file <<"\tlw $t0, " <<c.op2<<endl;
       file <<"\tsw $t0, " <<c.res<<endl;
     }
   } else if(tipo == 1) {
