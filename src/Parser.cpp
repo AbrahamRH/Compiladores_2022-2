@@ -371,6 +371,7 @@ expresion Parser::y(expresion id){
     Y_h.tipo =action.TablaT.getBaseType(id.tipo);
     Y_h.dir = action.nuevaTemporal();
     Y_h.tam = action.TablaT.getSize(Y_h.tipo);
+    action.genCod("*", E.dir, to_string(Y_h.tam), Y_h.dir);
     arreglo Y_s = y_(Y_h);
     expresion Y;
     Y.dir = Y_s.dir;
